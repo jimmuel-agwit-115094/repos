@@ -1,0 +1,36 @@
+# Service repos — not part of this config repo
+Banking/
+ChangeHistory/
+Checkout/
+Contact/
+CustomerServicePortal/
+Encryption/
+EventHub/
+Framework.Messaging/
+Framework.Web.AngularTesting/
+Menu/
+nbs-playbook/
+Passport/
+PaymentHub/
+PaymentMethodSelector/
+Payments/
+Personal Project/
+Remittance/
+ScheduledPayments/
+Tenant/
+xlr8AngularToolkit/
+xlr8PageTemplate/
+
+# MCP config with real PAT — use mcp-template.json instead
+.mcp.json
+
+# Local-only Claude settings
+.claude/settings.local.json
+
+# Generated analysis and plan outputs — not source-controlled
+.claude/_outputs/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+desktop.ini
