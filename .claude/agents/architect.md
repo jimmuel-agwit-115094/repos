@@ -83,55 +83,160 @@ Design the simplest implementation that satisfies every acceptance criterion. No
 
 Write the plan to: `C:\neldevsrc\repos\.claude\implementation-plan\{story-id}.md`
 
+The plan must be **fully self-contained**. A developer agent reading only this file must be able to implement the story without re-fetching the ADO item, re-reading convention docs, or re-exploring the codebase.
+
 Use this exact structure:
 
 ```markdown
 # {Story ID} — {Story Title}
 
-## Story Summary
+## Story Context
 
-{2–3 sentences: what the feature does, who it's for, what changes.}
+**Work Item ID:** {id}
+**Type:** {Bug / User Story / Task}
+**Title:** {exact verbatim title}
 
-## Acceptance Criteria
+### Description
 
-| # | Criterion | How it's satisfied |
-|---|-----------|-------------------|
-| 1 | {verbatim AC} | {which code change covers it} |
+{Full description from ADO — do not summarize. Paste verbatim.}
+
+### Acceptance Criteria (verbatim)
+
+1. {AC item 1 — exact wording from ADO}
+2. {AC item 2 — exact wording from ADO}
+...
+
+### Requirements and Constraints
+
+{Paste verbatim from story. Do not summarize.}
+
+---
 
 ## Affected Service(s)
 
-- {ServiceName} — {why}
+| Service | Why affected |
+|---------|-------------|
+| {ServiceName} | {specific reason} |
+
+---
+
+## Pattern References
+
+Files to study before coding. These are the closest existing implementations to copy the shape from.
+
+| What | File |
+|------|------|
+| Controller pattern | `{path/to/nearest/controller}` |
+| Service pattern | `{path/to/nearest/service}` |
+| Accessor pattern | `{path/to/nearest/accessor}` |
+| Doc/model pattern | `{path/to/nearest/doc}` |
+| Angular component pattern | `{path/to/nearest/component}` |
+| Angular service pattern | `{path/to/nearest/service.ts}` |
+| Unit test pattern | `{path/to/nearest/unit/test}` |
+| Integration test pattern | `{path/to/nearest/integration/test}` |
+| Angular spec pattern | `{path/to/nearest/spec}` |
+
+---
+
+## Contracts and DTOs
+
+Define every new or changed DTO, request, response, and event. Include all properties with types.
+
+### {DtoName} (`{namespace or file path}`)
+
+```csharp
+public record {DtoName}
+{
+    public {Type} {Property} { get; init; }  // {why this field}
+    public {Type?} {NullableProperty} { get; init; }
+}
+```
+
+Repeat for every new or changed contract.
+
+---
+
+## Database Changes
+
+List every MongoDB document field addition, removal, or index change.
+
+### Collection: `{collection-name}`
+
+| Field | Type | Nullable | Reason |
+|-------|------|----------|--------|
+| `{fieldName}` | `{BsonType}` | Yes/No | {why} |
+
+**New indexes:**
+
+```javascript
+// Reason: {why this index is needed}
+db.{collection}.createIndex({ {field}: 1 }, { name: "{index-name}", {sparse: true if nullable} })
+```
+
+If no DB changes: write "None."
 
 ---
 
 ## Backend Implementation
 
-### {Layer}: {ClassName}
+One block per file. List them in dependency order (contracts first, then accessors, then services, then controllers).
+
+### {Layer}: `{ClassName}`
 
 **File:** `{relative path from repo root}`
 **Change:** Add / Modify / Delete
+**Copied from:** `{pattern reference file}` *(omit if new from scratch)*
 
-{Describe exactly what to add or change. Use method signatures. Keep it brief.}
-
+**New interface (if applicable):**
 ```csharp
-// Method signature or key snippet — enough to guide a developer
-public async Task<Result> MethodName(ParamType param, CancellationToken ct)
+public interface I{ClassName}
+{
+    Task<{ReturnType}> {MethodName}({ParamType} param, CancellationToken ct);
+}
 ```
 
-Repeat one block per file that needs changing.
+**Methods to add or change:**
+```csharp
+// {one-line description of what this does}
+public async Task<{ReturnType}> {MethodName}({ParamType} param, CancellationToken ct)
+```
+
+**DI registration:** `[RegisterService]` on class / add to `Startup.cs` manually / no change
+
+**Key rules for this file:**
+- {any convention rule the developer must not forget here}
 
 ---
 
 ## Frontend Implementation
 
-### {ComponentName or ServiceName}
+One block per file. List in dependency order (service before component, routing module last).
 
-**File:** `{relative path}`
+### `{ClassName}` — {Component / Service / Module / Route}
+
+**File:** `{relative path from repo root}`
 **Change:** Add / Modify / Delete
+**Copied from:** `{pattern reference file}` *(omit if new from scratch)*
 
-{What the component/service does. Key properties and methods. Template changes if any.}
+**Key properties and methods:**
+```typescript
+// {description}
+methodName(param: ParamType): Promise<ReturnType>
 
-Repeat one block per file that needs changing.
+// @Input / @Output if component
+@Input() inputName: InputType;
+@Output() outputName = new EventEmitter<EventType>();
+```
+
+**Template changes (if any):**
+- Add `data-test-id="{id}"` to: {element description}
+- Show/hide: {condition}
+- Bind to: {service method}
+
+**Module/routing wiring:**
+- Declare in: `{module file}`
+- Import in: `{module file}` (if shared)
+- Route: `{ path: '{path}', component: {Name}, canMatch: [...], data: { ... } }`
 
 ---
 
@@ -139,63 +244,128 @@ Repeat one block per file that needs changing.
 
 ### Unit Tests — {Layer}
 
-**File:** `{relative path to test file}`
+**File:** `{relative path}`
+**New file:** Yes / No
+**Copied from:** `{pattern reference}`
 
-| Test name | What it verifies |
-|-----------|-----------------|
-| `MethodName_Condition_ExpectedResult` | {one line} |
+**Mock setup:**
+```csharp
+// Constructor mocks
+private readonly Mock<I{Dep}> _{dep}Mock = new(MockBehavior.Strict);
+// or MockBehavior.Loose for service tests
+```
+
+**Seed / fixture data:**
+```csharp
+// Values used across tests in this class
+var {entity} = new {Type} { {Field} = {value}, ... };
+```
+
+| Test name | Arrange | Assert |
+|-----------|---------|--------|
+| `{MethodName}_{Condition}_{Result}` | {what to mock/setup} | {what to verify} |
+
+---
 
 ### Integration Tests
 
 **File:** `{relative path}`
+**New file:** Yes / No
 
-| Test name | What it verifies |
-|-----------|-----------------|
-| `{test name}` | {one line} |
+**Seeder (if new data needed):**
+- Class: `Seed{Entity}Data` in `DataSeed/`
+- Insert: `{what documents to insert}`
+- Delete: `{how to clean up by ID}`
+
+| Test name | Request | Assert |
+|-----------|---------|--------|
+| `{test name}` | {HTTP method + endpoint + body} | {expected status + response shape} |
+
+---
 
 ### Angular Spec Tests
 
 **File:** `{relative path}`
+**New file:** Yes / No
 
-| Test name | What it verifies |
-|-----------|-----------------|
-| `should {behavior}` | {one line} |
+**TestBed providers:**
+```typescript
+mockService = jasmine.createSpyObj('{ServiceName}', ['{method1}', '{method2}']);
+// default return values:
+mockService.{method1}.and.returnValue(Promise.resolve({...}));
+```
+
+| Test name | `fakeAsync`? | Spy setup | Assert |
+|-----------|-------------|-----------|--------|
+| `should {behavior}` | Yes/No | `{method}.and.returnValue(...)` | {what to expect} |
 
 ---
 
 ## Implementation Sequence
 
-Follow this order exactly:
+Follow this order. Do not skip steps.
 
-1. {First thing to implement — usually a DTO or contract change}
-2. {Accessor change}
-3. {Service change}
-4. {Controller change}
-5. {Angular service change}
-6. {Angular component change}
-7. {Unit tests}
-8. {Integration tests}
-9. {Angular spec tests}
+1. Add/update DTOs and contracts in `Contracts/`
+2. Update MongoDB document class in `Accessors/`
+3. Add DB index (DbScripts — document what to add)
+4. Implement accessor method
+5. Add/update service interface
+6. Implement service method
+7. Add/update controller action
+8. Write unit tests for accessor
+9. Write unit tests for service
+10. Write unit tests for controller
+11. Write integration test
+12. Implement Angular service method
+13. Implement Angular component changes
+14. Write Angular spec tests
+15. Run `dotnet test` — all green
+16. Run `npm run test-headless` — all green
+
+---
+
+## NBS Rules Checklist
+
+Before marking each layer done, verify:
+
+- [ ] Every controller action has `[Authorize]` + `[TenantSecuredFunction(...)]`
+- [ ] No MongoDB access in Services — only via Accessors
+- [ ] `[RegisterService]` on every new service/accessor class
+- [ ] No `Version=` in `.csproj` — versions in `Directory.Packages.props` only
+- [ ] New queried fields have indexes
+- [ ] Sensitive data (PAN, account numbers) never stored plaintext — use `encryptedItemId`
+- [ ] Angular components have `standalone: false`
+- [ ] All new Angular HTTP calls use `lastValueFrom()`
+- [ ] `httpMock.verify()` in every Angular spec `afterEach`
+- [ ] `MockBehavior.Strict` for controller mocks, `Loose` for service mocks
+- [ ] `NullLogger<T>.Instance` — never `new Mock<ILogger<T>>()`
 
 ---
 
 ## Requirement Gaps
 
-{List any AC items that are ambiguous or missing detail. If none, write "None identified."}
+{List any AC items that are ambiguous, contradictory, or missing detail.}
+{If none: "None identified."}
 
-## Notes
+## Notes for Developer
 
-{Any risk, constraint, or convention reminder the developer needs to know before coding.}
+{Risk warnings, non-obvious constraints, or anything that will surprise a developer who reads only this file.}
 ```
 
 ---
 
 ## Rules
 
-- Write for a developer who knows C# and Angular but has never touched this repo before.
-- Every file path must be relative to the repo root and must exist or be a new file with a clear reason.
-- Do not invent class names — use the pattern from the nearest existing feature.
-- Do not write implementation code in the plan — signatures and brief descriptions only.
-- Do not skip tests — every AC needs at least one unit test.
+- The plan file is the single source of truth for the developer agent. It must not require the developer to re-read conventions, re-fetch the story, or re-explore the codebase.
+- Paste AC and description verbatim — never summarize or paraphrase the story content.
+- Every file path must be relative to the repo root. New files need a clear reason; existing files need a "Copied from" reference.
+- Record pattern reference file paths — the developer copies shape, not logic.
+- Include full DTO property lists with types — no handwaving like "add the necessary fields".
+- Include full MongoDB field and index specs — the developer should not have to infer schema.
+- Include specific test names, mock setups, and assertion targets — not just "write a test for this".
+- Include DI registration for every new class.
+- Do not invent class names — derive them from the nearest existing feature's naming pattern.
+- Do not write full method bodies in the plan — signatures and one-line descriptions only.
+- Do not skip the NBS Rules Checklist — fill it into the plan as written reminders.
 - If a requirement gap exists, list it and do not guess an answer.
 - Save the file and report the path when done.
