@@ -1,24 +1,54 @@
 # NBS Services — Claude Code Guide
 
 Root workspace: `C:\neldevsrc\repos`. Each subfolder is an independent repo.
-Do not expand this file — link to the chunks in `.claude/` below.
+Do not expand this file — link to the chunks in `.claude/rules/` below.
 
 ## Documentation Index
 
+Docs live under `.claude/rules/` organised by concern.
+
+**Architecture**
+
 | File | Contents |
 |------|----------|
-| [.claude/architecture.md](.claude/architecture.md) | Service groups, solution layout, hosting, auth, feature flags |
-| [.claude/services-payment-hub.md](.claude/services-payment-hub.md) | Banking, Checkout, Payments, Remittance, ScheduledPayments, PaymentMethodSelector |
-| [.claude/services-core.md](.claude/services-core.md) | Encryption, EventHub, ChangeHistory, Passport, Tenant, Menu, CustomerServicePortal |
-| [.claude/frontend-libraries.md](.claude/frontend-libraries.md) | xlr8AngularToolkit, xlr8PageTemplate, Framework.Web.AngularTesting |
-| [.claude/frontend.md](.claude/frontend.md) | Angular patterns — components, services, HTTP, forms, routing, shared module, NBS library usage (CSP) |
-| [.claude/dependencies.md](.claude/dependencies.md) | Inter-service dependency graph, local startup order, shared packages |
-| [.claude/conventions.md](.claude/conventions.md) | C#, Angular/TS, CI/CD, DB naming and patterns |
-| [.claude/commands.md](.claude/commands.md) | Xlr8 Tools, dotnet, npm, CI pipeline reference |
-| [.claude/backend-service-test.md](.claude/backend-service-test.md) | Unit tests — Services, Accessors, Client, Jobs (xUnit, Moq, FluentAssertions) |
-| [.claude/integration-test.md](.claude/integration-test.md) | Integration tests — WebApi + Job in-memory host (WebApplicationFactory, InMemory messaging) |
-| [.claude/spa-service-test.md](.claude/spa-service-test.md) | SPA tests — C# localization unit tests + Angular Karma component tests |
-| [.claude/e2e-test.md](.claude/e2e-test.md) | E2E tests — Playwright against deployed env, page objects, fixtures, CI integration |
+| [.claude/rules/architecture/architecture.md](.claude/rules/architecture/architecture.md) | Service groups, solution layout, hosting, auth, feature flags |
+| [.claude/rules/backend/backend.md](.claude/rules/backend/backend.md) | Backend architecture map — layers, flows, patterns, dependency rules, where to look first |
+
+**Microservice Setup**
+
+| File | Contents |
+|------|----------|
+| [.claude/rules/microservice-setup/services-payment-hub.md](.claude/rules/microservice-setup/services-payment-hub.md) | Banking, Checkout, Payments, Remittance, ScheduledPayments, PaymentMethodSelector |
+| [.claude/rules/microservice-setup/services-core.md](.claude/rules/microservice-setup/services-core.md) | Encryption, EventHub, ChangeHistory, Passport, Tenant, Menu, CustomerServicePortal |
+| [.claude/rules/microservice-setup/dependencies.md](.claude/rules/microservice-setup/dependencies.md) | Inter-service dependency graph, local startup order, shared packages |
+
+**Frontend**
+
+| File | Contents |
+|------|----------|
+| [.claude/rules/frontend/frontend.md](.claude/rules/frontend/frontend.md) | Angular patterns — components, services, HTTP, forms, routing, shared module, NBS library usage (CSP) |
+| [.claude/rules/frontend/frontend-libraries.md](.claude/rules/frontend/frontend-libraries.md) | xlr8AngularToolkit, xlr8PageTemplate, Framework.Web.AngularTesting |
+
+**Conventions**
+
+| File | Contents |
+|------|----------|
+| [.claude/rules/conventions/conventions.md](.claude/rules/conventions/conventions.md) | C#, Angular/TS, CI/CD, DB naming and patterns |
+
+**Tests**
+
+| File | Contents |
+|------|----------|
+| [.claude/rules/tests/backend-service-test.md](.claude/rules/tests/backend-service-test.md) | Unit tests — Services, Accessors, Client, Jobs (xUnit, Moq, FluentAssertions) |
+| [.claude/rules/tests/integration-test.md](.claude/rules/tests/integration-test.md) | Integration tests — TestFixture/BaseTest pattern, seeder lifecycle, MockUserContext, bearer auth, log side-effect verification |
+| [.claude/rules/tests/spa-service-test.md](.claude/rules/tests/spa-service-test.md) | SPA tests — C# controller/service/authorization unit tests + Angular Karma/Jasmine component tests |
+| [.claude/rules/tests/spec-test.md](.claude/rules/tests/spec-test.md) | Angular spec patterns — ComponentElements, NbsGuardTestHelper, HTTP mocking, fakeAsync, spy setup |
+| [.claude/rules/tests/e2e-test.md](.claude/rules/tests/e2e-test.md) | E2E tests — Playwright against deployed env, page objects, fixtures, CI integration |
+
+**MCP / Tooling**
+
+| File | Contents |
+|------|----------|
 | [.claude/mcp-ado.md](.claude/mcp-ado.md) | Azure DevOps MCP setup — PAT config, available tools, work item / PR queries |
 
 ## MCP Servers

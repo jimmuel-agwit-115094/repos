@@ -61,5 +61,5 @@ Shared patterns across all NBS repos. Per-service deviations documented in that 
 
 ## Local Development
 
-- **Xlr8 Tools** (PowerShell): `Invoke-Xlr8GoToDirectory`, `Invoke-Xlr8ServiceRunner` — see [commands.md](commands.md)
+- **Xlr8 Tools** (PowerShell): `Invoke-Xlr8GoToDirectory`, 
 - **Service runner config:** `Invoke-Xlr8ServiceRunner add deps` — wires up dependency services

@@ -40,8 +40,6 @@ When running a service locally with E2E tests, start dependencies first:
 | Remittance | EventHub, Encryption, ChangeHistory, Banking |
 | ScheduledPayments | EventHub, Encryption |
 
-Use `Invoke-Xlr8ServiceRunner` to manage local deps (see [commands.md](commands.md)).
-
 ## NuGet / npm Package Dependencies
 
 - All .NET services consume `Passport.Client` and `Passport.Client.AspNetCore` from Passport.

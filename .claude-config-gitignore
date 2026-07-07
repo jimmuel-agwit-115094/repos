@@ -1,0 +1,10 @@
+# Generated per-session — not shared config
+.claude/stories/
+.claude/story-summary/
+
+# Machine-local permission overrides
+.claude/settings.local.json
+
+# Real .mcp.json contains PAT — never commit it
+# Commit mcp-template.json instead
+.mcp.json
