@@ -43,7 +43,7 @@ When running a service locally with E2E tests, start dependencies first:
 ## NuGet / npm Package Dependencies
 
 - All .NET services consume `Passport.Client` and `Passport.Client.AspNetCore` from Passport.
-- All .NET services consume `Tenant.Client` and `Tenant.TenantContext.AspNetCore` from Tenant.
+- All .NET services consume `Tenant.Client` and `Tenant.TenantContext.AspNetCore` from `xlr8-app-tenant`.
 - All Angular SPAs consume `ng-xlr8-toolkit`, `ng-xlr8-toolkit-styles` from xlr8AngularToolkit.
 - All Angular SPAs consume `xlr8-page-template` from xlr8PageTemplate.
 - SPA test projects consume `Framework.Web.AngularTesting` packages.

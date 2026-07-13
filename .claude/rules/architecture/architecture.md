@@ -27,7 +27,7 @@ Shared services consumed by most Payment Hub services.
 | `EventHub` | Azure Event Hub wrapper — cross-service messaging bus |
 | `ChangeHistory` | Audit trail API + Angular SPA |
 | `Passport` | OAuth identity + authorization (API keys, scopes, roles) |
-| `Tenant` | Tenant registry, caching, context propagation |
+| `xlr8-app-tenant` | Tenant registry, caching, context propagation (GitHub-migrated; replaces `Tenant/`) |
 | `Menu` | Navigation menu API + SPA |
 | `CustomerServicePortal` | Internal support portal (has own `.claude/` docs) |
 

@@ -54,9 +54,11 @@ Shared infrastructure services consumed by Payment Hub and other services. Treat
 
 ---
 
-## Tenant (`Tenant/`)
+## Tenant (`xlr8-app-tenant/`)
 
 **Purpose:** Tenant registry and context. Tracks all NBS tenants; provides `TenantContext` middleware for per-request tenant resolution.
+
+**Migration:** Repo migrated to GitHub as `xlr8-app-tenant`. Replaces the legacy `Tenant/` ADO repo.
 
 **Key src modules:**
 - `Caching` / `Caching.AspNetCore` / `Client.Caching` — layered tenant caching

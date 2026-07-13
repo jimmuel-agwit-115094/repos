@@ -289,7 +289,7 @@ dotnet test {Repo}.sln --filter "Category=Integration"
 | Encryption | `WebApi.IntegrationTests` |
 | EventHub | `WebApi.IntegrationTests` |
 | Passport | `Passport.Web.IntegrationTests`, `Passport.Web.Legacy.IntegrationTests`, `Passport.Web.Legacy.Sync.IntegrationTests`, `Passport.Web.DeprecatedApis.IntegrationTests`, `Passport.Job.IntegrationTests` |
-| Tenant | `WebApi.IntegrationTests` |
+| xlr8-app-tenant | `WebApi.IntegrationTests` |
 | Menu | `WebApi.IntegrationTests` |
 | ChangeHistory | `WebApi.IntegrationTests` |
 | CustomerServicePortal | `WebApi.IntegrationTests` — 6 seeder classes, log side-effect verification, no job tests |

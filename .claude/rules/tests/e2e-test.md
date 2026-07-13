@@ -367,6 +367,6 @@ npm run merge-junit-reports   # → junit/junit.xml
 | Remittance | `WebSpa.E2ETests` | Row presence + accessibility |
 | Encryption | `WebSpa.E2ETests` | — |
 | EventHub | `WebSpa.E2ETests` | — |
-| Tenant | `WebSpa.E2ETests` | Change history row presence only |
+| xlr8-app-tenant | `WebSpa.E2ETests` | Change history row presence only |
 | CustomerServicePortal | `WebSpa.E2ETests` | **Full** — AG Grid sort, inline filter, field-search, people search, person dashboard |
 | Passport | `Passport.E2ETests` | Row presence + checkbox selection |

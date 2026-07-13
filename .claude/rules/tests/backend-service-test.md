@@ -57,6 +57,6 @@ dotnet test {Repo}.sln --filter "Category=Unit"
 | Encryption | `Services.UnitTests` |
 | EventHub | `Services.UnitTests`, `Accessors.UnitTests` |
 | Passport | `Passport.Services.UnitTests`, `Passport.Accessors.UnitTests`, `Passport.Web.UnitTests`, `Passport.Client.AspNetCore.UnitTests`, `Passport.MemoryAuthorizationCache.UnitTests`, `Passport.RedisAuthorizationCache.UnitTests` |
-| Tenant | `Services.UnitTests` |
+| xlr8-app-tenant | `Services.UnitTests` |
 | Menu | `Services.UnitTests` |
 | ChangeHistory | `Services.UnitTests` |

@@ -24,7 +24,7 @@ No skipping layers. Accessors never reference Services.
 | **Remittance** | Collects completed payment txns, batches disbursements to tenants via Banking BT transfers | `Nbs.Remittance.Client` |
 | **ScheduledPayments** | Recurring/installment schedule state machine, submits due payments to Payments on schedule | `Nbs.ScheduledPayments.Client` |
 | **EventHub** | Internal webhook bus — persists events, manages subscriptions, delivers to subscriber URLs with retry | `Nbs.EventHub.Client` |
-| **Tenant** | Tenant registry, `TenantContext` middleware (injected into all other services), publishes `tenant-changed` | `Nbs.Tenants.Context.AspNetCore` |
+| **xlr8-app-tenant** | Tenant registry, `TenantContext` middleware (injected into all other services), publishes `tenant-changed` | `Nbs.Tenants.Context.AspNetCore` |
 | **Passport** | OAuth2/OIDC provider (Duende IdentityServer), users, roles, API keys, `[TenantSecuredFunction]` attribute | `Nbs.Passport.Client.AspNetCore` |
 | **ChangeHistory** | Centralized audit trail — all services post changesets here | `Nbs.ChangeHistory.Client` |
 | **Encryption** | PCI-scoped encrypt/decrypt — services store only an `encryptedItemId` reference | `Nbs.Encryption.Client` |
@@ -92,7 +92,7 @@ BackgroundServices host → IMessageHandlerOf<TMessage> implementations
 | Payment orchestration | `Payments/src/Services/PaymentService.cs` | Banking, Checkout |
 | Order/session state | `Checkout/src/Accessors/PaymentSessions/PaymentSessionV3Accessor.cs` | Payments, Banking |
 | Schedule state machine | `ScheduledPayments/src/Services/ScheduleService.cs` | Payments, Checkout |
-| Tenant context resolution | `Tenant/src/TenantContext.AspNetCore/` (NuGet middleware) | Every other service (consumers only) |
+| Tenant context resolution | `xlr8-app-tenant/src/TenantContext.AspNetCore/` (NuGet middleware) | Every other service (consumers only) |
 | Auth enforcement | `Passport/src/Passport.Client.AspNetCore/` (`[TenantSecuredFunction]`) | Business logic services |
 | Audit trail | `ChangeHistory/src/Services/ChangeSetService.cs` | Each service (async publish only) |
 | Sensitive data (PAN, account numbers) | `Encryption/src/Accessors/EncryptedItemAccessor.cs` | All other services (store `encryptedItemId` only) |
@@ -175,7 +175,7 @@ Flag interface lives in `{Service}/src/FeatureFlags/`.
 
 ```
                    ┌─────────────────────────────────┐
-                   │   Tenant  ·  Passport  ·  Menu  │  (Platform layer — all services depend on these)
+                   │   xlr8-app-tenant  ·  Passport  ·  Menu  │  (Platform layer — all services depend on these)
                    └─────────────────────────────────┘
                               ↑         ↑
         ┌──────────────────────────────────────────┐
@@ -215,7 +215,7 @@ Flag interface lives in `{Service}/src/FeatureFlags/`.
 | Understand payment flow | `Payments/src/Services/PaymentService.cs` — central orchestrator |
 | Understand checkout flow | `Checkout/src/Services/PaymentSessionSubmitService.cs` + `PaymentSessionCompletionService.cs` |
 | Understand job execution | Any `{Service}/src/{JobName}/Worker.cs` — all follow same `IHostLifetimeBackgroundService` pattern |
-| Understand tenant resolution | `Tenant/src/TenantContext.AspNetCore/` middleware |
+| Understand tenant resolution | `xlr8-app-tenant/src/TenantContext.AspNetCore/` middleware |
 | Understand auth checks | `Passport/src/Passport.Client.AspNetCore/Authorization/Tenant/TenantSecuredFunctionAttribute.cs` |
 | Find secured function IDs | `{Service}/src/SharedConstants/SecuredFunctions.cs` |
 | Find event topic names | `{Service}/src/Client.Contracts/XxxEventTypes.cs` (EventHub) or `InMemoryTopics.cs` (in-process) |

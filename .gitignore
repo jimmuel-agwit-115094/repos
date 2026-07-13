@@ -18,6 +18,7 @@ Personal Project/
 Remittance/
 ScheduledPayments/
 Tenant/
+xlr8-app-tenant/
 xlr8AngularToolkit/
 xlr8PageTemplate/
 
@@ -29,6 +30,8 @@ xlr8PageTemplate/
 
 # Generated analysis and plan outputs — not source-controlled
 .claude/_outputs/
+.claude/for-estimation-stories/
+.claude/implementation-plan/
 
 # OS / IDE
 .DS_Store
