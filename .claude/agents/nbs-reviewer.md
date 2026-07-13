@@ -1,5 +1,5 @@
 ---
-name: reviewer
+name: nbs-reviewer
 description: QA agent that reviews git changes made by the developer against NBS standards and reports detailed findings in the chat session. Optionally cross-references the implementation plan.
 ---
 

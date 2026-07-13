@@ -26,7 +26,7 @@ Docs live under `.claude/rules/` organised by concern.
 
 | File | Contents |
 |------|----------|
-| [.claude/rules/frontend/frontend.md](.claude/rules/frontend/frontend.md) | Angular patterns — components, services, HTTP, forms, routing, shared module, NBS library usage (CSP) |
+| [.claude/rules/frontend/frontend.md](.claude/rules/frontend/frontend.md) | Angular patterns — components, services, HTTP, forms, routing, shared module, NBS library usage, NPDS web component registration (CSP) |
 | [.claude/rules/frontend/frontend-libraries.md](.claude/rules/frontend/frontend-libraries.md) | xlr8AngularToolkit, xlr8PageTemplate, Framework.Web.AngularTesting |
 
 **Conventions**
@@ -63,12 +63,11 @@ Specialized subagents in `.claude/agents/`. Invoked by `/craft` and `/review-pr`
 
 | Agent | File | Role |
 |-------|------|------|
-| `story-analyst-agent` | [.claude/agents/story-analyst-agent.md](.claude/agents/story-analyst-agent.md) | Fetches ADO story, produces structured business brief |
-| `architect-agent` | [.claude/agents/architect-agent.md](.claude/agents/architect-agent.md) | Explores codebase, designs implementation plan |
-| `developer-agent` | [.claude/agents/developer-agent.md](.claude/agents/developer-agent.md) | Writes production code + tests, self-audits |
-| `qa-agent` | [.claude/agents/qa-agent.md](.claude/agents/qa-agent.md) | Audits implementation, issues SHIP / BLOCK verdict |
-| `draft-pr-agent` | [.claude/agents/draft-pr-agent.md](.claude/agents/draft-pr-agent.md) | Creates DRAFT PR on ADO with exact story title |
-| `pr-reviewer-agent` | [.claude/agents/pr-reviewer-agent.md](.claude/agents/pr-reviewer-agent.md) | Reviews PRs against NBS standards, posts comments |
+| `nbs-analyst` | [.claude/agents/nbs-analyst.md](.claude/agents/nbs-analyst.md) | Fetches ADO story, produces estimation brief with story points, blockers, unknowns |
+| `nbs-architect` | [.claude/agents/nbs-architect.md](.claude/agents/nbs-architect.md) | Explores codebase, designs full implementation plan |
+| `nbs-developer` | [.claude/agents/nbs-developer.md](.claude/agents/nbs-developer.md) | Implements plan — backend, frontend, tests |
+| `nbs-reviewer` | [.claude/agents/nbs-reviewer.md](.claude/agents/nbs-reviewer.md) | Audits git changes against NBS standards, issues PASS / FAIL verdict |
+| `nbs-pr-reviewer` | [.claude/agents/nbs-pr-reviewer.md](.claude/agents/nbs-pr-reviewer.md) | Reviews ADO pull requests against NBS standards, posts comments |
 
 ## Micro-Skills (Agent Skills)
 

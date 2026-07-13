@@ -139,6 +139,20 @@ export class SearchUsersPage extends BasePage {
 | 3 | CSS `.ag-header-cell[col-id="name"]` | AG Grid internals only |
 | 4 | `:has-text()` | Last resort; combine with `.first()` |
 
+**`npds-button` locator — target the host element, not the inner shadow-DOM `<button>`.**
+
+`nbs-button` rendered its button in light DOM, so `nbs-button[data-test-id="x"] >> button` worked. `npds-button` uses shadow DOM — the inner `<button>` is not reachable with a CSS child combinator. Target the host directly:
+
+```typescript
+// Correct — target the npds-button host
+readonly myButton = this.component.locator('npds-button[data-test-id="nbsButton_myAction"]');
+
+// Wrong — >> button does not pierce shadow DOM in CSS locators
+readonly myButton = this.component.locator('npds-button[data-test-id="nbsButton_myAction"] >> button');
+```
+
+`npds-button` reflects `disabled` to a host attribute (Lit `reflect: true`), so Playwright's `isEnabled()`, `toBeDisabled()`, `toBeVisible()`, and `click()` all work correctly on the host element. Similarly, `npds-icon-button` close buttons are reachable via `getByRole('button', { name: 'Close' })` — Playwright auto-pierces shadow DOM for role-based locators.
+
 **Test ID naming conventions (`data-test-id`):**
 
 | Element | Pattern | Example |

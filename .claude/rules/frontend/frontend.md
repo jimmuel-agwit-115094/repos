@@ -317,14 +317,112 @@ export class SharedModule {}
 
 ## NBS Library Usage
 
+### NPDS Component Registration (Web Components)
+
+NPDS components (`npds-button`, `npds-checkbox`, `npds-icon-button`, etc.) are **Web Components (Custom Elements)**. They must be registered via a **side-effect import in the component `.ts` file** that uses them. Without this import the element renders as unstyled plain text or an unrecognised HTML tag.
+
+**Rule: import in the `.component.ts` file — not in `SharedModule`.**
+
+```typescript
+// my-feature.component.ts  — add at the bottom of the import block
+import '@nbs/npds-components/button';
+import '@nbs/npds-components/icon-button';
+import '@nbs/npds-components/checkbox';
+```
+
+| Template element | Required import |
+|-----------------|----------------|
+| `<npds-button>` | `import '@nbs/npds-components/button';` |
+| `<npds-icon-button>` | `import '@nbs/npds-components/icon-button';` |
+| `<npds-checkbox>` | `import '@nbs/npds-components/checkbox';` |
+| `<npds-heading>` | `import '@nbs/npds-components/heading';` |
+| `<npds-icon>` | `import '@nbs/npds-components/icon';` |
+
+**Only import what the template actually uses.** Reference: `person-detail.component.ts` (imports `button`, `icon-button`, `icon`).
+
+**`npds-button` content projection:** text goes between tags, not in a `buttonText` attribute. The `i18n` attribute goes on the element itself.
+
+```html
+<!-- Correct -->
+<npds-button variant="primary" appearance="filled" i18n="@@myId">Search</npds-button>
+
+<!-- Wrong — nbs-button legacy attribute, does not work on npds-button -->
+<npds-button buttonText="Search"></npds-button>
+```
+
+**`npds-button` disabled state — set both `[disabled]` and `[attr.disabled]`:** `[disabled]` sets the Lit property (reflected to attribute); `[attr.disabled]` explicitly writes the HTML attribute so axe can detect disabled state without piercing shadow DOM.
+
+```html
+<npds-button [disabled]="isDisabled" [attr.disabled]="isDisabled || null">Label</npds-button>
+```
+
+**`npds-button` WCAG contrast for disabled states — CSS custom property override required.** NPDS's default disabled tokens fail WCAG AA 4.5:1. axe-core does not recognize `disabled` on custom element hosts as an exemption and still checks contrast. Fix by overriding the token on the `npds-button` selector in the component's SCSS — CSS custom properties inherit through the shadow DOM boundary.
+
+| Variant | Default token | Default hex | Background | Contrast | Override |
+|---------|--------------|------------|-----------|---------|---------|
+| `secondary/outlined/disabled` | `gray-500` | `#8a919f` | white | 3.16:1 ❌ | `#767676` → 4.54:1 ✅ |
+| `primary/filled/disabled` | `gray-600` | `#717682` | `gray-100` (`#f0f1f2`) | 4.0:1 ❌ | `#5a5f68` (gray-700) → 5.64:1 ✅ |
+
+```scss
+// In component.scss — applies wherever this component renders a disabled npds-button
+npds-button {
+  --npds-button-color-text-secondary-outlined-disabled: #767676;
+  --npds-button-color-text-primary-filled-disabled: #5a5f68;
+}
+```
+
+Apply only the override(s) relevant to the disabled variant(s) actually used in the component.
+
+**`npds-checkbox` binding:** does not support `[(ngModel)]`. Use `[checked]` + `(change)`:
+
+```html
+<npds-checkbox label="Include inactive users"
+               [checked]="model.includeInactive"
+               (change)="model.includeInactive = $any($event.target).checked">
+</npds-checkbox>
+```
+
+**`npds-icon-button` `aria-label` — do NOT put it on the host element.** axe flags `aria-allowed-attr` because `aria-label` is not a valid ARIA attribute on a custom element with no explicit ARIA role. Use the `label` prop only — it sets the accessible name inside the shadow DOM. Linters sometimes auto-suggest `aria-label`; reject it.
+
+**`npds-icon-button` tooltip:** use the `[label]` binding — NPDS renders it as a built-in chat-bubble tooltip above the icon. Do **not** combine with `[matTooltip]`; that adds a second tooltip to the right, causing a double-tooltip on hover.
+
+```html
+<!-- Correct — use [label] for the built-in NPDS bubble tooltip -->
+<npds-icon-button icon="circle-question"
+                  [label]="helpText">
+</npds-icon-button>
+
+<!-- If the text is a static string (no localization binding needed): -->
+<npds-icon-button icon="circle-question"
+                  label="Static help text">
+</npds-icon-button>
+
+<!-- Wrong — matTooltip adds a second tooltip; do not combine -->
+<npds-icon-button icon="circle-question"
+                  [label]="helpText"
+                  [matTooltip]="helpText">
+</npds-icon-button>
+```
+
+The localized value pattern (when text comes from `$localize` on the component):
+```typescript
+// component.ts
+readonly helpText = $localize`:Description|@@myId:Tooltip text here.`;
+```
+```html
+<!-- template — binds the already-localized string -->
+<npds-icon-button icon="circle-question" [label]="helpText"></npds-icon-button>
+```
+
 ### Components
 
 | Component | Usage |
 |-----------|-------|
 | `<npds-heading>` | `<npds-heading as="h1" size="xl">Title</npds-heading>` |
-| `<npds-button>` | `<npds-button variant="primary" size="lg">Search</npds-button>` |
+| `<npds-button>` | `<npds-button variant="primary" appearance="filled">Search</npds-button>` |
 | `<npds-icon>` | `<npds-icon glyph="magnifying-glass"></npds-icon>` |
 | `<npds-icon-button>` | Icon-only action buttons |
+| `<npds-checkbox>` | `<npds-checkbox label="Include inactive users" [checked]="..." (change)="...">` |
 
 ### Services
 
