@@ -60,3 +60,4 @@ dotnet test {Repo}.sln --filter "Category=Unit"
 | xlr8-app-tenant | `Services.UnitTests` |
 | Menu | `Services.UnitTests` |
 | ChangeHistory | `Services.UnitTests` |
+| xlr8-app-branding | `Services.UnitTests` |

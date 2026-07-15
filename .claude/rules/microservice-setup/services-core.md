@@ -79,6 +79,23 @@ Shared infrastructure services consumed by Payment Hub and other services. Treat
 
 ---
 
+## Branding (`xlr8-app-branding/`)
+
+**Purpose:** Tenant styling and branding API + SPA. Manages themes, color palettes, and branding assets per tenant.
+
+**Stack:** .NET WebApi + Angular SPA.
+
+**Migration:** Repo migrated to GitHub as `xlr8-app-branding`. Replaces the legacy `Branding/` ADO repo.
+
+**Key src modules:**
+- `Client` / `Client.Contracts` — typed client for other services to consume (`Nbs.Branding.Client`)
+- `Contracts` — DTOs, event contracts, messaging topics
+- `WebSpa` — Angular SPA for branding administration
+
+**Note:** Publishes `Nbs.Branding.Client` NuGet package consumed by service SPAs.
+
+---
+
 ## CustomerServicePortal (`CustomerServicePortal/`)
 
 **Purpose:** Internal support portal for NBS tenant administration.

@@ -59,7 +59,7 @@ Docs live under `.claude/rules/` organised by concern.
 
 ## Agents
 
-Specialized subagents in `.claude/agents/`. Invoked by `/craft` and `/review-pr` commands via the Agent tool.
+Specialized subagents in `.claude/agents/`. Invoked via commands or directly through the Agent tool.
 
 | Agent | File | Role |
 |-------|------|------|
@@ -71,30 +71,34 @@ Specialized subagents in `.claude/agents/`. Invoked by `/craft` and `/review-pr`
 
 ## Micro-Skills (Agent Skills)
 
-Focused knowledge units preloaded into agents. Lives in `.claude/skills/{name}/SKILL.md`. Not invoked directly — agents carry them.
+Focused knowledge units loaded into agents or invoked directly as slash commands. Lives in `.claude/skills/{name}/SKILL.md`.
 
-| Skill | What it teaches |
-|-------|----------------|
-| `ado-story-reader` | Fetch ADO work items via MCP; extract title, AC, linked items |
-| `nbs-conventions` | Which convention docs to load; key C#, Angular, CSP rules |
-| `codebase-explorer` | Systematic search strategy: keywords → Glob/Grep → reference patterns |
-| `story-analyzer` | Map AC to domain, surface risks, produce structured brief |
-| `implementation-designer` | Design layered implementation; naming; reference pattern discipline |
-| `code-implementer` | C# + Angular rules: layers, auth, feature flags, DTOs |
-| `test-implementer` | Unit, integration, SPA, E2E test rules |
-| `implementation-auditor` | Full audit checklist: naming, tests, security, layer discipline |
-| `draft-pr-creator` | Create DRAFT PR on ADO/GitHub with exact story title |
-| `pr-diff-reader` | Fetch PR metadata, full diff, and file content |
-| `pr-commenter` | Format and post PR threads via ADO MCP |
+| Skill | File | What it does |
+|-------|------|--------------|
+| `implementation-plan` | [.claude/skills/implementation-plan/SKILL.md](.claude/skills/implementation-plan/SKILL.md) | Template for NBS implementation plan files; writes to `.claude/implementation-plan/{story-id}.md` |
+| `story-getter` | [.claude/skills/story-getter/SKILL.md](.claude/skills/story-getter/SKILL.md) | Retrieve and normalize an Azure DevOps work item |
+| `test-fixer` | [.claude/skills/test-fixer/SKILL.md](.claude/skills/test-fixer/SKILL.md) | Diagnose and fix failing Angular Karma/Jasmine specs, C# WebSpa.UnitTests, and Playwright E2E tests |
+| `ui-fixer` | [.claude/skills/ui-fixer/SKILL.md](.claude/skills/ui-fixer/SKILL.md) | Diagnose and fix Angular UI issues — NPDS, Material, change detection, accessibility, SCSS |
 
 ## Commands
 
-Two commands. No intermediate steps — `/craft` is fully autonomous.
+Individual commands per pipeline stage. Each maps directly to a subagent.
 
 | Command | Invoke | Description |
 |---------|--------|-------------|
-| [craft](.claude/commands/craft.md) | `/craft <id>` | Full autonomous pipeline: analyze → architect → develop → QA → Draft PR |
-| [review-pr](.claude/commands/review-pr.md) | `/review-pr <pr-link>` | Review ADO PR, present findings, post approved comments |
+| [nbs-analyst](.claude/commands/nbs-analyst.md) | `/nbs-analyst <id>` | Fetch ADO story, produce estimation brief → writes to `.claude/for-estimation-stories/{id}.md` |
+| [nbs-architect](.claude/commands/nbs-architect.md) | `/nbs-architect <id>` | Explore codebase, design full implementation plan → writes to `.claude/implementation-plan/{id}.md` |
+| [nbs-developer](.claude/commands/nbs-developer.md) | `/nbs-developer <id>` | Read implementation plan, implement backend + frontend + tests |
+| [nbs-reviewer](.claude/commands/nbs-reviewer.md) | `/nbs-reviewer <id>` | QA git changes against NBS standards, issue PASS / FAIL verdict |
+| [nbs-pr-reviewer](.claude/commands/nbs-pr-reviewer.md) | `/nbs-pr-reviewer <pr-link>` | Review ADO PR, post inline comments and summary thread |
+| [repo-update](.claude/commands/repo-update.md) | `/repo-update <repo-name>` | Register a new repo — updates workspace docs and `.gitignore` |
+
+## Output Directories
+
+| Directory | Written by | Contents |
+|-----------|-----------|----------|
+| [.claude/for-estimation-stories/](.claude/for-estimation-stories/) | `/nbs-analyst` | Estimation briefs — one `.md` file per story ID |
+| [.claude/implementation-plan/](.claude/implementation-plan/) | `/nbs-architect` | Full implementation plans — one `.md` file per story ID |
 
 ## Quick Facts
 

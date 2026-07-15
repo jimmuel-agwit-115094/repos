@@ -47,3 +47,4 @@ When running a service locally with E2E tests, start dependencies first:
 - All Angular SPAs consume `ng-xlr8-toolkit`, `ng-xlr8-toolkit-styles` from xlr8AngularToolkit.
 - All Angular SPAs consume `xlr8-page-template` from xlr8PageTemplate.
 - SPA test projects consume `Framework.Web.AngularTesting` packages.
+- Service SPAs consume `Nbs.Branding.Client` from `xlr8-app-branding` for tenant theming.

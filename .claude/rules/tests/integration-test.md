@@ -293,3 +293,4 @@ dotnet test {Repo}.sln --filter "Category=Integration"
 | Menu | `WebApi.IntegrationTests` |
 | ChangeHistory | `WebApi.IntegrationTests` |
 | CustomerServicePortal | `WebApi.IntegrationTests` — 6 seeder classes, log side-effect verification, no job tests |
+| xlr8-app-branding | `WebApi.IntegrationTests` |

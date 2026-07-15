@@ -29,6 +29,7 @@ Shared services consumed by most Payment Hub services.
 | `Passport` | OAuth identity + authorization (API keys, scopes, roles) |
 | `xlr8-app-tenant` | Tenant registry, caching, context propagation (GitHub-migrated; replaces `Tenant/`) |
 | `Menu` | Navigation menu API + SPA |
+| `xlr8-app-branding` | Tenant styling and branding — themes, color palettes (GitHub-migrated; replaces `Branding/`) |
 | `CustomerServicePortal` | Internal support portal (has own `.claude/` docs) |
 
 ### Angular Frontend Libraries

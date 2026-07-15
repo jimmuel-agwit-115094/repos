@@ -29,6 +29,7 @@ No skipping layers. Accessors never reference Services.
 | **ChangeHistory** | Centralized audit trail — all services post changesets here | `Nbs.ChangeHistory.Client` |
 | **Encryption** | PCI-scoped encrypt/decrypt — services store only an `encryptedItemId` reference | `Nbs.Encryption.Client` |
 | **Menu** | Role+tenant aware navigation menus for all SPAs; no Accessors, pure computation | `Nbs.Menu.Client` |
+| **xlr8-app-branding** | Tenant styling and branding — themes, color palettes, branding assets | `Nbs.Branding.Client` |
 | **Contact** | Tenant contact CRUD with diff-based change history | `Nbs.Contact.Client` |
 | **CustomerServicePortal** | Internal support portal — own read-optimized MongoDB projections updated via EventHub; not a public API surface |  |
 
